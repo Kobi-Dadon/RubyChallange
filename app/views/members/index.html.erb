@@ -1,0 +1,22 @@
+<h1>Listing Members</h1>
+
+<%= link_to 'New Member', new_member_path %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Website</th>
+    <th>Friends</th>
+    <th></th>
+  </tr>
+
+  <% @member.each do |member| %>
+    <tr>
+      <td><%= member.name %></td>
+      <td><a href="http://<%= member.short_web %>"><%= member.short_web %></a></td>
+      <td><%= member.friends %></td>
+      <td><%= link_to 'Show', member_path(member) %></td>
+    </tr>
+  <% end %>
+</table>
+

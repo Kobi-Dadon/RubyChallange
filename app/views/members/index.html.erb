@@ -14,7 +14,7 @@
     <tr>
       <td><%= member.name %></td>
       <td><a href="http://<%= member.short_web %>"><%= member.short_web %></a></td>
-      <td><%= member.friends %></td>
+      <td><%= num_of_friends(member.id) %></td>
       <td><%= link_to 'Show', member_path(member) %></td>
     </tr>
   <% end %>

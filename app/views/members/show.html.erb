@@ -5,12 +5,12 @@
 
 <p>
   <strong>Website:</strong>
-  <%= @member.website %>
+  <a href="http://<%= @member.website %>"><%= @member.website %></a>
 </p>
 
 <p>
   <strong>Short Website:</strong>
-  <%= @member.short_web %>
+  <a href="http://<%= @member.short_web %>"><%= @member.short_web %></a>
 </p>
 
 <p>
@@ -19,8 +19,32 @@
 </p>
 
 <p>
-  <strong>Friends:</strong>
-  <%= @member.friends %>
+  <strong>Friends:</strong><br>
+  <% member_friends(@member.id).each do |f| %>
+    <a href="/members/<%= f.id.to_s%>"><%= f.name %></a>,
+    <a href="<%= f.website %>">Website</a>
+    <br>
+  <% end %>
 </p>
+
+<%= form_tag("/members/"+@member.id.to_s+"/edit", method: "GET") do %>
+  <%= label_tag("Add friend: ") %>
+  <%= select_tag 'friend_id', options_for_select(member_not_friends(@member.id).collect{ |f| [f.name, f.id] })  %>
+  <%= hidden_field_tag :member_id, @member.id %>
+  <%= submit_tag("Add") %>
+<% end %>
+
+<%= form_tag("/members/"+@member.id.to_s+"/find", method: "GET") do %>
+  <%= label_tag("Find topic at other friends: ") %>
+  <%= text_field_tag 'topic'%>
+  <%= submit_tag("Search") %>
+<% end %>
+
+<% if session['path'].present? %>
+  <label><%= session['path'] %></label>
+  <br>
+<%= session['path'] = nil %>
+<% end %>
+
 
 <%= link_to 'Back', members_path %>
